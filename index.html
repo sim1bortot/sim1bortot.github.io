@@ -79,7 +79,7 @@
             55% { transform: translateX(0) rotate(0deg); }
         }
 
-        /* Base della busta COLORATA */
+        /* MODIFICA: Colori Busta Migliorati (più ricchi/rubino) */
         .envelope-base {
             position: absolute;
             top: 50%;
@@ -87,13 +87,14 @@
             transform: translate(-50%, -50%);
             width: 520px;
             height: 360px;
-            background: linear-gradient(135deg, #d63447 0%, #a8394f 100%);
-            border: 2px solid #8b1e2f;
+            /* Gradiente più ricco */
+            background: linear-gradient(135deg, #c41a3b 0%, #8b1228 100%);
+            border: 2px solid #6d0f20;
             border-radius: 6px;
             box-shadow: 
                 0 15px 50px rgba(0, 0, 0, 0.35),
-                inset 0 2px 6px rgba(255, 255, 255, 0.2);
-            z-index: 10; /* Livello base */
+                inset 0 2px 6px rgba(255, 255, 255, 0.15);
+            z-index: 10;
         }
         
         .envelope-base::before {
@@ -114,7 +115,7 @@
             height: 360px;
             transform-origin: top center;
             animation: openFlap 2s ease-in-out 3s forwards;
-            z-index: 20; /* Flap sopra la base */
+            z-index: 20;
         }
 
         @keyframes openFlap {
@@ -122,21 +123,24 @@
             100% { transform: translate(-50%, -50%) rotateX(-180deg); z-index: 1; }
         }
 
+        /* MODIFICA: Colori Patta Migliorati */
         .flap-front {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #d63447 0%, #a8394f 50%, #c44569 100%);
+            /* Gradiente coordinato più ricco */
+            background: linear-gradient(135deg, #c41a3b 0%, #a91734 50%, #8b1228 100%);
             clip-path: polygon(0 0, 100% 0, 50% 65%);
-            border: 2px solid #8b1e2f;
+            border: 2px solid #6d0f20;
             border-bottom: none;
             transform-style: preserve-3d;
             backface-visibility: hidden;
         }
         
+        /* MODIFICA: Retro patta (interno busta) */
         .flap-back {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 65%;
-            background: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
+            background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%); /* Un interno dorato/caldo */
             border: 2px solid #c46640;
             transform: rotateX(180deg);
             backface-visibility: hidden;
@@ -169,7 +173,7 @@
         .heart4 { bottom: 35%; right: 35%; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* MODIFICA IMPORTANTE: Container del foglio/foto */
+        /* Container del foglio/foto */
         .photo-container {
             position: absolute;
             top: 50%;
@@ -178,40 +182,23 @@
             width: 400px;
             height: 500px;
             opacity: 0; 
-            /* Animazione modificata per gestire lo z-index */
+            /* L'animazione di uscita finisce a 9s (5s delay + 4s durata) */
             animation: slideOutAndPop 4s ease-in-out 5s forwards;
-            z-index: 5; /* Parte da SOTTO la busta */
+            z-index: 5;
             filter: drop-shadow(0 25px 70px rgba(0, 0, 0, 0.5));
         }
 
-        /* NUOVA ANIMAZIONE: Esce da dietro, poi passa davanti e si centra */
         @keyframes slideOutAndPop {
-            0% {
-                transform: translate(-50%, 50%) scale(0.8);
-                opacity: 1;
-                z-index: 5; /* Dietro */
-            }
-            40% {
-                /* Esce fuori dalla busta verso l'alto */
-                transform: translate(-50%, -80%) scale(0.8); 
-                z-index: 5; /* Ancora dietro */
-            }
-            41% {
-                /* Scatto del livello: ora è davanti alla busta */
-                z-index: 50; 
-            }
-            100% {
-                /* Si posiziona al centro e si ingrandisce sopra la busta */
-                transform: translate(-50%, -50%) scale(1.1); 
-                opacity: 1;
-                z-index: 50; /* Rimane davanti */
-            }
+            0% { transform: translate(-50%, 50%) scale(0.8); opacity: 1; z-index: 5; }
+            40% { transform: translate(-50%, -80%) scale(0.8); z-index: 5; }
+            41% { z-index: 50; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; z-index: 50; }
         }
 
         .photo-frame {
             width: 100%;
             height: 100%;
-            background: white; /* Il foglio bianco */
+            background: white;
             padding: 15px;
             box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
             border-radius: 4px;
@@ -219,6 +206,10 @@
             animation: photoRotate 2s ease-in-out 8s infinite;
             position: relative;
             overflow: hidden;
+            /* Per centrare il testo del foglio */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         @keyframes photoRotate {
@@ -241,15 +232,29 @@
         .horses-left { left: 5px; border-right: 1px dashed #ccc; }
         .horses-right { right: 5px; border-left: 1px dashed #ccc; }
 
+        /* MODIFICA: Stile per il testo sul foglio bianco */
+        .paper-text {
+            position: absolute;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: #333;
+            text-align: center;
+            z-index: 1; /* Sotto la foto */
+            width: 80%;
+        }
+
+        /* MODIFICA TIMING: La foto compare dopo 3 secondi che il foglio è uscito */
         .photo {
-            width: 100%;
-            height: 100%;
+            position: absolute; /* Assoluto per coprire il testo */
+            top: 15px; left: 15px; /* Compensare il padding del frame */
+            width: calc(100% - 30px);
+            height: calc(100% - 30px);
             object-fit: cover;
             border-radius: 2px;
-            position: relative;
-            z-index: 2;
+            z-index: 2; /* Sopra il testo del foglio */
             opacity: 0; 
-            animation: fadeInPhoto 2s ease-in-out 8s forwards; 
+            /* Foglio esce a 9s. Aspetta 3s. Inizia a 12s. */
+            animation: fadeInPhoto 2s ease-in-out 12s forwards; 
         }
 
         @keyframes fadeInPhoto {
@@ -257,13 +262,13 @@
             100% { opacity: 1; }
         }
 
-        /* Coriandoli, Fuochi, Raggi, Testo invariati */
+        /* Coriandoli, Fuochi, Raggi, Testo */
         .confetti {
             position: absolute;
             width: 12px; height: 12px;
             opacity: 0;
             animation: confettiFall 4s linear forwards;
-            z-index: 60; /* Sopra a tutto */
+            z-index: 60;
         }
         @keyframes confettiFall {
             0% { opacity: 0; transform: translateY(-100px) rotate(0deg); }
@@ -289,7 +294,8 @@
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
             transform-origin: top center;
             opacity: 0;
-            animation: rayRotate 3s ease-out 5s forwards;
+            /* Raggi sincronizzati con l'uscita completa del foglio */
+            animation: rayRotate 3s ease-out 9s forwards; 
             pointer-events: none;
             z-index: 40;
         }
@@ -312,6 +318,7 @@
             100% { opacity: 0; transform: scale(0) rotate(360deg); }
         }
 
+        /* MODIFICA TIMING: Testo grande sincronizzato con la foto */
         .birthday-text {
             position: absolute;
             top: 40px; left: 50%;
@@ -321,7 +328,8 @@
             color: white;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.8), -2px -2px 0 #ff6b9d, 2px 2px 0 #ff6b9d;
             opacity: 0;
-            animation: fadeInTextBig 2s ease-in 8s forwards;
+            /* Inizia leggermente prima della foto */
+            animation: fadeInTextBig 2s ease-in 11.5s forwards;
             z-index: 70;
             text-align: center;
             letter-spacing: 5px;
@@ -359,6 +367,7 @@
 </head>
 <body>
     <script>
+        // Creazione particelle sfondo
         for (let i = 0; i < 30; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -376,14 +385,12 @@
     <div class="container">
         <div class="envelope">
             <div class="envelope-base"></div>
-            
             <div class="envelope-flap">
                 <div class="flap-front">
                     <div class="envelope-decoration">Apri qui...</div>
                 </div>
                 <div class="flap-back"></div>
             </div>
-
             <div class="heart heart1">💝</div>
             <div class="heart heart2">🎁</div>
             <div class="heart heart3">🎈</div>
@@ -399,12 +406,15 @@
                     <span>🐎</span><span>🐎</span><span>🐎</span><span>🐎</span><span>🐎</span>
                 </div>
 
+                <div class="paper-text">a qualcosa di diverso</div>
+
                 <img src="biglietto.jpg" alt="Auguri!" class="photo">
             </div>
         </div>
     </div>
 
     <script>
+        // ... (Funzioni createConfetti, createFireworks, createSparkles, createStars rimangono uguali) ...
         function createConfetti() {
             const colors = ['#ff6b9d', '#c06c84', '#f67280', '#ffd93d', '#6bcf7f', '#4facfe', '#9b59b6', '#e74c3c', '#f39c12', '#3498db'];
             const shapes = ['circle', 'square', 'triangle', 'rectangle'];
@@ -465,7 +475,6 @@
             const container = document.querySelector('.photo-container');
             const oldRays = container.querySelectorAll('.light-ray');
             oldRays.forEach(ray => ray.remove());
-
             for (let i = 0; i < 12; i++) {
                 const ray = document.createElement('div');
                 ray.className = 'light-ray';
@@ -490,7 +499,7 @@
                 }, i * 50);
             }
         }
-
+        
         function createStars() {
             for (let i = 0; i < 25; i++) {
                 const star = document.createElement('div');
@@ -503,16 +512,18 @@
             }
         }
 
+        // MODIFICA TIMING INIZIALE: Effetti partono quando il foglio è fuori (9s)
         setTimeout(() => {
             createConfetti();
             createFireworks();
             createSparkles();
             createLightRays();
-        }, 5000);
+        }, 9000);
 
         createStars();
 
         function resetAnimation() {
+            // Pulizia
             document.querySelectorAll('.confetti').forEach(el => el.remove());
             document.querySelectorAll('.firework').forEach(el => el.remove());
             document.querySelectorAll('.sparkle').forEach(el => el.remove());
@@ -525,30 +536,36 @@
             const photo = document.querySelector('.photo');
             const birthdayText = document.querySelector('.birthday-text');
             
+            // Reset animazioni CSS
             envelope.style.animation = 'none';
             envelopeFlap.style.animation = 'none';
             photoContainer.style.animation = 'none';
             photo.style.animation = 'none';
             birthdayText.style.animation = 'none';
             
+            // Riavvio animazioni con i nuovi timing
             setTimeout(() => {
                 envelope.style.animation = 'shake 3s ease-in-out';
                 envelopeFlap.style.animation = 'openFlap 2s ease-in-out 3s forwards';
-                // Modificato per usare la nuova animazione slideOutAndPop
+                // Foglio esce (finisce a 9s)
                 photoContainer.style.animation = 'slideOutAndPop 4s ease-in-out 5s forwards';
-                photo.style.animation = 'fadeInPhoto 2s ease-in-out 8s forwards';
-                birthdayText.style.animation = 'fadeInTextBig 2s ease-in 8s forwards';
+                // Foto appare (inizia a 12s, quindi 3s dopo che il foglio è uscito)
+                photo.style.animation = 'fadeInPhoto 2s ease-in-out 12s forwards';
+                // Testo appare
+                birthdayText.style.animation = 'fadeInTextBig 2s ease-in 11.5s forwards';
                 
+                // Effetti speciali (a 9s, quando il foglio è fuori)
                 setTimeout(() => {
                     createConfetti();
                     createFireworks();
                     createSparkles();
                     createLightRays();
-                }, 5000);
+                }, 9000);
             }, 50);
         }
 
-        setInterval(resetAnimation, 14000); // Allungato leggermente il loop
+        // MODIFICA TIMING LOOP: Esteso a 25 secondi per permettere alla foto di stare ferma 10s
+        setInterval(resetAnimation, 25000);
     </script>
 </body>
 </html>
