@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const PHOTO_DISPLAY_TIME = 5000;
     const LOOP_DELAY = 3000;
 
+    
     /**
      * Inizializza o resetta tutti gli elementi allo stato iniziale.
      */
