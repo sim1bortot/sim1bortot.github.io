@@ -59,9 +59,9 @@
         /* Container principale */
         .container {
             position: relative;
-            width: 500px;
-            height: 600px;
-            perspective: 1500px;
+            width: 650px;
+            height: 750px;
+            perspective: 2000px;
             z-index: 10;
         }
 
@@ -94,14 +94,29 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px;
-            height: 280px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border: 3px solid #e0e0e0;
-            border-radius: 8px;
+            width: 520px;
+            height: 360px;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e8e8e8 100%);
+            border: 2px solid #d4d4d4;
+            border-radius: 6px;
             box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.8);
+                0 15px 50px rgba(0, 0, 0, 0.35),
+                inset 0 2px 6px rgba(255, 255, 255, 0.9),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Texture della carta sulla busta */
+        .envelope-base::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
+            border-radius: 6px;
         }
 
         .envelope-flap {
@@ -109,8 +124,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px;
-            height: 280px;
+            width: 520px;
+            height: 360px;
             transform-origin: top center;
             animation: openFlap 2s ease-in-out 3s forwards;
         }
@@ -126,14 +141,28 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #f67280 100%);
-            clip-path: polygon(0 0, 100% 0, 50% 60%);
-            border: 3px solid #d63031;
+            background: linear-gradient(135deg, #d63447 0%, #a8394f 50%, #c44569 100%);
+            clip-path: polygon(0 0, 100% 0, 50% 65%);
+            border: 2px solid #8b1e2f;
             border-bottom: none;
             box-shadow: 
-                0 -5px 15px rgba(0, 0, 0, 0.2),
-                inset 0 -2px 8px rgba(255, 255, 255, 0.3);
+                0 -8px 20px rgba(0, 0, 0, 0.25),
+                inset 0 -3px 10px rgba(255, 255, 255, 0.2),
+                inset 0 3px 10px rgba(0, 0, 0, 0.15);
             transform-style: preserve-3d;
+        }
+        
+        /* Texture sulla patta */
+        .flap-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 6px);
+            clip-path: polygon(0 0, 100% 0, 50% 65%);
         }
 
         .flap-back {
@@ -141,13 +170,15 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 60%;
-            background: linear-gradient(135deg, #f8b500 0%, #ffd93d 100%);
-            border: 3px solid #f39c12;
+            height: 65%;
+            background: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
+            border: 2px solid #c46640;
             border-bottom: none;
             transform: rotateX(180deg);
             transform-style: preserve-3d;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 
+                inset 0 2px 10px rgba(0, 0, 0, 0.25),
+                inset 0 -2px 8px rgba(255, 255, 255, 0.15);
         }
 
         /* Decorazioni sulla busta */
@@ -157,11 +188,16 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: 2px;
+            font-family: 'Brush Script MT', cursive;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.4),
+                0 0 8px rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
             z-index: 5;
+            text-align: center;
+            line-height: 1.4;
         }
 
         .heart {
@@ -187,11 +223,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, 120%);
-            width: 350px;
-            height: 450px;
+            width: 400px;
+            height: 500px;
             opacity: 0;
             animation: slideOut 3s ease-out 5s forwards;
             z-index: 20;
+            filter: drop-shadow(0 25px 70px rgba(0, 0, 0, 0.5));
         }
 
         @keyframes slideOut {
@@ -237,10 +274,10 @@
         /* Coriandoli */
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             opacity: 0;
-            animation: confettiFall 3s linear forwards;
+            animation: confettiFall 4s linear forwards;
         }
 
         @keyframes confettiFall {
@@ -252,38 +289,121 @@
                 opacity: 1;
             }
             100% {
-                opacity: 0.8;
-                transform: translateY(800px) rotate(720deg);
+                opacity: 0.6;
+                transform: translateY(900px) rotate(1080deg);
+            }
+        }
+        
+        /* Fuochi d'artificio */
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        @keyframes fireworkExplode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+        
+        /* Raggi di luce */
+        .light-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 150px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
+            transform-origin: top center;
+            opacity: 0;
+            animation: rayRotate 3s ease-out 5s forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes rayRotate {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(0deg) scaleY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(180deg) scaleY(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(360deg) scaleY(0.5);
+            }
+        }
+        
+        /* Sparkles intorno alla foto */
+        .sparkle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: sparkleAnim 1.5s ease-out forwards;
+        }
+        
+        @keyframes sparkleAnim {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
             }
         }
 
         /* Testo di auguri */
         .birthday-text {
             position: absolute;
-            top: 20px;
+            top: 40px;
             left: 50%;
-            transform: translateX(-50%);
-            font-size: 48px;
-            font-weight: bold;
+            transform: translateX(-50%) scale(1);
+            font-size: 72px;
+            font-weight: 900;
             color: white;
             text-shadow: 
-                3px 3px 6px rgba(0, 0, 0, 0.5),
-                0 0 20px rgba(255, 255, 255, 0.5);
+                4px 4px 8px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(255, 215, 0, 0.8),
+                0 0 50px rgba(255, 105, 180, 0.6),
+                -2px -2px 0 #ff6b9d,
+                2px -2px 0 #ff6b9d,
+                -2px 2px 0 #ff6b9d,
+                2px 2px 0 #ff6b9d;
             opacity: 0;
-            animation: fadeInText 2s ease-in 8s forwards;
+            animation: fadeInTextBig 2s ease-in 8s forwards;
             z-index: 30;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 5px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            -webkit-text-stroke: 2px #ff1493;
         }
 
-        @keyframes fadeInText {
+        @keyframes fadeInTextBig {
             0% {
                 opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
+                transform: translateX(-50%) translateY(-30px) scale(0.5);
+            }
+            50% {
+                transform: translateX(-50%) translateY(0) scale(1.15);
             }
             100% {
                 opacity: 1;
-                transform: translateX(-50%) translateY(0);
+                transform: translateX(-50%) translateY(0) scale(1);
             }
         }
 
@@ -347,7 +467,7 @@
             <!-- Lembo della busta -->
             <div class="envelope-flap">
                 <div class="flap-front">
-                    <div class="envelope-decoration">🎂</div>
+                    <div class="envelope-decoration">a qualcosa di diverso...</div>
                 </div>
                 <div class="flap-back"></div>
             </div>
@@ -370,10 +490,11 @@
     <script>
         // Funzione per creare coriandoli
         function createConfetti() {
-            const colors = ['#ff6b9d', '#c06c84', '#f67280', '#ffd93d', '#6bcf7f', '#4d96ff', '#9b59b6', '#e74c3c'];
-            const shapes = ['circle', 'square', 'triangle'];
+            const colors = ['#ff6b9d', '#c06c84', '#f67280', '#ffd93d', '#6bcf7f', '#4facfe', '#9b59b6', '#e74c3c', '#f39c12', '#3498db'];
+            const shapes = ['circle', 'square', 'triangle', 'rectangle'];
             
-            for (let i = 0; i < 150; i++) {
+            // Aumentato a 300 coriandoli
+            for (let i = 0; i < 300; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
@@ -384,34 +505,105 @@
                     if (shape === 'circle') {
                         confetti.style.borderRadius = '50%';
                         confetti.style.backgroundColor = color;
+                        confetti.style.width = Math.random() * 12 + 8 + 'px';
+                        confetti.style.height = confetti.style.width;
                     } else if (shape === 'square') {
                         confetti.style.backgroundColor = color;
+                        confetti.style.width = Math.random() * 12 + 8 + 'px';
+                        confetti.style.height = confetti.style.width;
+                    } else if (shape === 'rectangle') {
+                        confetti.style.backgroundColor = color;
+                        confetti.style.width = Math.random() * 8 + 6 + 'px';
+                        confetti.style.height = Math.random() * 15 + 12 + 'px';
                     } else {
                         confetti.style.width = '0';
                         confetti.style.height = '0';
-                        confetti.style.borderLeft = '5px solid transparent';
-                        confetti.style.borderRight = '5px solid transparent';
-                        confetti.style.borderBottom = '10px solid ' + color;
+                        confetti.style.borderLeft = '6px solid transparent';
+                        confetti.style.borderRight = '6px solid transparent';
+                        confetti.style.borderBottom = '12px solid ' + color;
                     }
                     
                     confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
-                    confetti.style.width = Math.random() * 10 + 8 + 'px';
-                    confetti.style.height = confetti.style.width;
+                    confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                    confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
                     
                     document.body.appendChild(confetti);
                     
                     setTimeout(() => {
                         confetti.remove();
-                    }, 5000);
-                }, i * 20);
+                    }, 6000);
+                }, i * 10);
+            }
+        }
+        
+        // Funzione per creare fuochi d'artificio
+        function createFireworks() {
+            const colors = ['#ff6b9d', '#ffd93d', '#6bcf7f', '#4facfe', '#9b59b6', '#e74c3c'];
+            
+            for (let f = 0; f < 8; f++) {
+                setTimeout(() => {
+                    const centerX = Math.random() * window.innerWidth;
+                    const centerY = Math.random() * window.innerHeight * 0.6;
+                    
+                    for (let i = 0; i < 30; i++) {
+                        const firework = document.createElement('div');
+                        firework.className = 'firework';
+                        firework.style.left = centerX + 'px';
+                        firework.style.top = centerY + 'px';
+                        firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        
+                        const angle = (Math.PI * 2 * i) / 30;
+                        const velocity = Math.random() * 100 + 100;
+                        const tx = Math.cos(angle) * velocity;
+                        const ty = Math.sin(angle) * velocity;
+                        
+                        firework.style.setProperty('--tx', tx + 'px');
+                        firework.style.setProperty('--ty', ty + 'px');
+                        firework.style.animation = 'fireworkExplode 1s ease-out forwards';
+                        
+                        document.body.appendChild(firework);
+                        
+                        setTimeout(() => firework.remove(), 1000);
+                    }
+                }, f * 400);
+            }
+        }
+        
+        // Funzione per creare raggi di luce
+        function createLightRays() {
+            const container = document.querySelector('.photo-container');
+            for (let i = 0; i < 12; i++) {
+                const ray = document.createElement('div');
+                ray.className = 'light-ray';
+                ray.style.transform = `translate(-50%, -50%) rotate(${i * 30}deg)`;
+                container.appendChild(ray);
+            }
+        }
+        
+        // Funzione per creare sparkles
+        function createSparkles() {
+            const sparkleSymbols = ['✨', '⭐', '💫', '🌟', '✦', '★'];
+            
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.textContent = sparkleSymbols[Math.floor(Math.random() * sparkleSymbols.length)];
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+                    sparkle.style.fontSize = Math.random() * 20 + 15 + 'px';
+                    
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 2000);
+                }, i * 50);
             }
         }
 
         // Creare stelle decorative
         function createStars() {
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
@@ -422,9 +614,12 @@
             }
         }
 
-        // Avvia coriandoli quando la foto inizia ad uscire
+        // Avvia tutti gli effetti quando la foto inizia ad uscire
         setTimeout(() => {
             createConfetti();
+            createFireworks();
+            createSparkles();
+            createLightRays();
         }, 5000);
 
         // Crea stelle
@@ -432,8 +627,11 @@
 
         // Ripeti l'intera animazione
         function resetAnimation() {
-            // Rimuovi tutti i coriandoli esistenti
+            // Rimuovi tutti gli elementi esistenti
             document.querySelectorAll('.confetti').forEach(el => el.remove());
+            document.querySelectorAll('.firework').forEach(el => el.remove());
+            document.querySelectorAll('.sparkle').forEach(el => el.remove());
+            document.querySelectorAll('.light-ray').forEach(el => el.remove());
             
             // Ricrea l'animazione
             const envelope = document.querySelector('.envelope');
@@ -451,10 +649,13 @@
                 envelope.style.animation = 'shake 3s ease-in-out';
                 envelopeFlap.style.animation = 'openFlap 2s ease-in-out 3s forwards';
                 photoContainer.style.animation = 'slideOut 3s ease-out 5s forwards';
-                birthdayText.style.animation = 'fadeInText 2s ease-in 8s forwards';
+                birthdayText.style.animation = 'fadeInTextBig 2s ease-in 8s forwards';
                 
                 setTimeout(() => {
                     createConfetti();
+                    createFireworks();
+                    createSparkles();
+                    createLightRays();
                 }, 5000);
             }, 50);
         }
