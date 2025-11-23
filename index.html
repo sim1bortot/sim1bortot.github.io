@@ -79,7 +79,7 @@
             55% { transform: translateX(0) rotate(0deg); }
         }
 
-        /* MODIFICA: Colori Busta Migliorati (più ricchi/rubino) */
+        /* Colori Busta */
         .envelope-base {
             position: absolute;
             top: 50%;
@@ -87,7 +87,6 @@
             transform: translate(-50%, -50%);
             width: 520px;
             height: 360px;
-            /* Gradiente più ricco */
             background: linear-gradient(135deg, #c41a3b 0%, #8b1228 100%);
             border: 2px solid #6d0f20;
             border-radius: 6px;
@@ -123,11 +122,9 @@
             100% { transform: translate(-50%, -50%) rotateX(-180deg); z-index: 1; }
         }
 
-        /* MODIFICA: Colori Patta Migliorati */
         .flap-front {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Gradiente coordinato più ricco */
             background: linear-gradient(135deg, #c41a3b 0%, #a91734 50%, #8b1228 100%);
             clip-path: polygon(0 0, 100% 0, 50% 65%);
             border: 2px solid #6d0f20;
@@ -136,11 +133,10 @@
             backface-visibility: hidden;
         }
         
-        /* MODIFICA: Retro patta (interno busta) */
         .flap-back {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 65%;
-            background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%); /* Un interno dorato/caldo */
+            background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
             border: 2px solid #c46640;
             transform: rotateX(180deg);
             backface-visibility: hidden;
@@ -182,7 +178,6 @@
             width: 400px;
             height: 500px;
             opacity: 0; 
-            /* L'animazione di uscita finisce a 9s (5s delay + 4s durata) */
             animation: slideOutAndPop 4s ease-in-out 5s forwards;
             z-index: 5;
             filter: drop-shadow(0 25px 70px rgba(0, 0, 0, 0.5));
@@ -206,7 +201,6 @@
             animation: photoRotate 2s ease-in-out 8s infinite;
             position: relative;
             overflow: hidden;
-            /* Per centrare il testo del foglio */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -232,29 +226,38 @@
         .horses-left { left: 5px; border-right: 1px dashed #ccc; }
         .horses-right { right: 5px; border-left: 1px dashed #ccc; }
 
-        /* MODIFICA: Stile per il testo sul foglio bianco */
         .paper-text {
             position: absolute;
             font-family: 'Brush Script MT', cursive;
             font-size: 32px;
             color: #333;
             text-align: center;
-            z-index: 1; /* Sotto la foto */
+            z-index: 1;
             width: 80%;
         }
 
-        /* MODIFICA TIMING: La foto compare dopo 3 secondi che il foglio è uscito */
-        .photo {
-            position: absolute; /* Assoluto per coprire il testo */
-            top: 15px; left: 15px; /* Compensare il padding del frame */
+        /* MODIFICA: Classe per il Link (ex .photo) */
+        .photo-link {
+            position: absolute; 
+            top: 15px; left: 15px; 
             width: calc(100% - 30px);
             height: calc(100% - 30px);
-            object-fit: cover;
-            border-radius: 2px;
-            z-index: 2; /* Sopra il testo del foglio */
+            z-index: 2;
             opacity: 0; 
-            /* Foglio esce a 9s. Aspetta 3s. Inizia a 12s. */
-            animation: fadeInPhoto 2s ease-in-out 12s forwards; 
+            animation: fadeInPhoto 2s ease-in-out 12s forwards;
+            cursor: pointer; /* Cambia cursore per indicare cliccabilità */
+            display: block;
+            text-decoration: none;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        /* MODIFICA: L'immagine dentro il link */
+        .photo-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         @keyframes fadeInPhoto {
@@ -294,7 +297,6 @@
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
             transform-origin: top center;
             opacity: 0;
-            /* Raggi sincronizzati con l'uscita completa del foglio */
             animation: rayRotate 3s ease-out 9s forwards; 
             pointer-events: none;
             z-index: 40;
@@ -318,7 +320,6 @@
             100% { opacity: 0; transform: scale(0) rotate(360deg); }
         }
 
-        /* MODIFICA TIMING: Testo grande sincronizzato con la foto */
         .birthday-text {
             position: absolute;
             top: 40px; left: 50%;
@@ -328,7 +329,6 @@
             color: white;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.8), -2px -2px 0 #ff6b9d, 2px 2px 0 #ff6b9d;
             opacity: 0;
-            /* Inizia leggermente prima della foto */
             animation: fadeInTextBig 2s ease-in 11.5s forwards;
             z-index: 70;
             text-align: center;
@@ -406,15 +406,17 @@
                     <span>🐎</span><span>🐎</span><span>🐎</span><span>🐎</span><span>🐎</span>
                 </div>
 
-                <div class="paper-text">Dedica</div>
+                <div class="paper-text">a qualcosa di diverso</div>
 
-                <img src="biglietto.jpg" alt="Auguri!" class="photo">
+                <a href="voucher.pdf" download="voucher.pdf" class="photo-link">
+                    <img src="biglietto.jpg" alt="Clicca per scaricare">
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // ... (Funzioni createConfetti, createFireworks, createSparkles, createStars rimangono uguali) ...
+        // ... Funzioni per effetti ...
         function createConfetti() {
             const colors = ['#ff6b9d', '#c06c84', '#f67280', '#ffd93d', '#6bcf7f', '#4facfe', '#9b59b6', '#e74c3c', '#f39c12', '#3498db'];
             const shapes = ['circle', 'square', 'triangle', 'rectangle'];
@@ -512,7 +514,6 @@
             }
         }
 
-        // MODIFICA TIMING INIZIALE: Effetti partono quando il foglio è fuori (9s)
         setTimeout(() => {
             createConfetti();
             createFireworks();
@@ -523,7 +524,6 @@
         createStars();
 
         function resetAnimation() {
-            // Pulizia
             document.querySelectorAll('.confetti').forEach(el => el.remove());
             document.querySelectorAll('.firework').forEach(el => el.remove());
             document.querySelectorAll('.sparkle').forEach(el => el.remove());
@@ -533,28 +533,23 @@
             const envelope = document.querySelector('.envelope');
             const envelopeFlap = document.querySelector('.envelope-flap');
             const photoContainer = document.querySelector('.photo-container');
-            const photo = document.querySelector('.photo');
+            const photoLink = document.querySelector('.photo-link'); // Aggiornato selettore
             const birthdayText = document.querySelector('.birthday-text');
             
             // Reset animazioni CSS
             envelope.style.animation = 'none';
             envelopeFlap.style.animation = 'none';
             photoContainer.style.animation = 'none';
-            photo.style.animation = 'none';
+            photoLink.style.animation = 'none';
             birthdayText.style.animation = 'none';
             
-            // Riavvio animazioni con i nuovi timing
             setTimeout(() => {
                 envelope.style.animation = 'shake 3s ease-in-out';
                 envelopeFlap.style.animation = 'openFlap 2s ease-in-out 3s forwards';
-                // Foglio esce (finisce a 9s)
                 photoContainer.style.animation = 'slideOutAndPop 4s ease-in-out 5s forwards';
-                // Foto appare (inizia a 12s, quindi 3s dopo che il foglio è uscito)
-                photo.style.animation = 'fadeInPhoto 2s ease-in-out 12s forwards';
-                // Testo appare
+                photoLink.style.animation = 'fadeInPhoto 2s ease-in-out 12s forwards';
                 birthdayText.style.animation = 'fadeInTextBig 2s ease-in 11.5s forwards';
                 
-                // Effetti speciali (a 9s, quando il foglio è fuori)
                 setTimeout(() => {
                     createConfetti();
                     createFireworks();
@@ -564,7 +559,6 @@
             }, 50);
         }
 
-        // MODIFICA TIMING LOOP: Esteso a 25 secondi per permettere alla foto di stare ferma 10s
         setInterval(resetAnimation, 25000);
     </script>
 </body>
