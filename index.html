@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Buon Compleanno!</title>
     <style>
         * {
@@ -13,6 +13,8 @@
 
         body {
             min-height: 100vh;
+            /* Su mobile previene lo scroll elastico indesiderato */
+            height: 100vh; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -52,6 +54,10 @@
             height: 750px;
             perspective: 2000px;
             z-index: 10;
+            /* Centratura fluida */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Busta */
@@ -236,7 +242,7 @@
             width: 80%;
         }
 
-        /* MODIFICA: Classe per il Link (ex .photo) */
+        /* Classe per il Link */
         .photo-link {
             position: absolute; 
             top: 15px; left: 15px; 
@@ -245,14 +251,15 @@
             z-index: 2;
             opacity: 0; 
             animation: fadeInPhoto 2s ease-in-out 12s forwards;
-            cursor: pointer; /* Cambia cursore per indicare cliccabilità */
+            cursor: pointer;
             display: block;
             text-decoration: none;
             border-radius: 2px;
             overflow: hidden;
+            /* Rimuove il flash blu al tocco su iPhone */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* MODIFICA: L'immagine dentro il link */
         .photo-link img {
             width: 100%;
             height: 100%;
@@ -265,7 +272,7 @@
             100% { opacity: 1; }
         }
 
-        /* Coriandoli, Fuochi, Raggi, Testo */
+        /* Effetti */
         .confetti {
             position: absolute;
             width: 12px; height: 12px;
@@ -336,6 +343,7 @@
             font-family: 'Impact', 'Arial Black', sans-serif;
             -webkit-text-stroke: 2px #ff1493;
             width: 100%;
+            pointer-events: none; /* Permette di cliccare attraverso il testo se serve */
         }
         @keyframes fadeInTextBig {
             0% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(0.5); }
@@ -363,11 +371,41 @@
             0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
             50% { opacity: 1; transform: scale(1) rotate(180deg); }
         }
+
+        /* --- OTTIMIZZAZIONE IPHONE / MOBILE --- */
+        @media (max-width: 768px) {
+            /* Scaliamo tutto il container per adattarlo allo schermo piccolo */
+            .container {
+                transform: scale(0.55); /* Riduciamo tutto al 55% della dimensione */
+                transform-origin: center center;
+                /* Aggiustiamo l'altezza occupata dopo lo scaling */
+                width: 100vw; 
+            }
+
+            /* Testo più piccolo e posizionato meglio */
+            .birthday-text {
+                font-size: 38px;
+                top: 8%;
+                width: 95%;
+                line-height: 1.2;
+                letter-spacing: 2px;
+                -webkit-text-stroke: 1px #ff1493;
+            }
+
+            /* Aggiustamento decorazione busta */
+            .envelope-decoration {
+                font-size: 24px;
+            }
+
+            /* Coriandoli un po' più piccoli */
+            .confetti {
+                width: 8px; height: 8px;
+            }
+        }
     </style>
 </head>
 <body>
     <script>
-        // Creazione particelle sfondo
         for (let i = 0; i < 30; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -408,7 +446,7 @@
 
                 <div class="paper-text">a qualcosa di diverso</div>
 
-                <a href="Voucher.pdf" download="Voucher.pdf" class="photo-link">
+                <a href="voucher.pdf" download="voucher.pdf" class="photo-link">
                     <img src="biglietto.jpg" alt="Clicca per scaricare">
                 </a>
             </div>
@@ -416,7 +454,6 @@
     </div>
 
     <script>
-        // ... Funzioni per effetti ...
         function createConfetti() {
             const colors = ['#ff6b9d', '#c06c84', '#f67280', '#ffd93d', '#6bcf7f', '#4facfe', '#9b59b6', '#e74c3c', '#f39c12', '#3498db'];
             const shapes = ['circle', 'square', 'triangle', 'rectangle'];
@@ -533,10 +570,9 @@
             const envelope = document.querySelector('.envelope');
             const envelopeFlap = document.querySelector('.envelope-flap');
             const photoContainer = document.querySelector('.photo-container');
-            const photoLink = document.querySelector('.photo-link'); // Aggiornato selettore
+            const photoLink = document.querySelector('.photo-link');
             const birthdayText = document.querySelector('.birthday-text');
             
-            // Reset animazioni CSS
             envelope.style.animation = 'none';
             envelopeFlap.style.animation = 'none';
             photoContainer.style.animation = 'none';
